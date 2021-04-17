@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "Resources_April_2021",
 				"fileSystem": "output"
 			},
 			"compressionCodec": "none"
