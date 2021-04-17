@@ -1,0 +1,79 @@
+{
+	"name": "CopyPipeline_yby",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_yby",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "input//Resourcing_Details.xlsx"
+					},
+					{
+						"name": "Destination",
+						"value": "output//Resources_April_2021"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"validateDataConsistency": true,
+					"logSettings": {
+						"enableCopyActivityLog": true,
+						"copyActivityLogSettings": {
+							"logLevel": "Info",
+							"enableReliableLogging": false
+						},
+						"logLocationSettings": {
+							"linkedServiceName": {
+								"referenceName": "jsynapse-WorkspaceDefaultStorage",
+								"type": "LinkedServiceReference"
+							},
+							"path": "logs"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_yby",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_yby",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-04-17T04:08:33Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

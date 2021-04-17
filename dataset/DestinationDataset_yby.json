@@ -1,0 +1,21 @@
+{
+	"name": "DestinationDataset_yby",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "jsynapse-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Resources_April_2021",
+				"fileSystem": "output"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}
