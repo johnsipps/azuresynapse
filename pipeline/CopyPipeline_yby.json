@@ -56,6 +56,221 @@
 							},
 							"path": "logs"
 						}
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Employee_Id",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Employee_Id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Employee_Name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Employee_Name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Designation_Name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Designation_Name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Designation_Id",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Designation_Id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Designation_Id_Int",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Designation_Id_Int",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Group_Name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Group_Name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Level_Name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Level_Name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Department_Name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Department_Name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Id",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Deployable",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Deployable",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Location",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Location",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Category",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Category",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Status",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Status",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Contribution",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Contribution",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Deleted",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Deleted",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Sub_Departments",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Sub_Departments",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectIds",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectIds",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountIds",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountIds",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountNames",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountNames",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ActiveSowCount",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ActiveSowCount",
+									"type": "String"
+								}
+							}
+						]
 					}
 				},
 				"inputs": [
