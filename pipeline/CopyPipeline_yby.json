@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_yby",
+				"name": "Excel2ParqCopy",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -291,7 +291,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Copy_yby",
+						"activity": "Excel2ParqCopy",
 						"dependencyConditions": [
 							"Succeeded"
 						]
