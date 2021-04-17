@@ -12,13 +12,21 @@
 					"name": "ParqSource"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ParquetTarget",
+						"type": "DatasetReference"
+					},
+					"name": "Target"
+				}
+			],
 			"transformations": [
 				{
 					"name": "ManagersFilter"
 				}
 			],
-			"script": "source(output(\n\t\tEmployee_Id as string,\n\t\tEmployee_Name as string,\n\t\tDesignation_Name as string,\n\t\tDesignation_Id as string,\n\t\tDesignation_Id_Int as string,\n\t\tGroup_Name as string,\n\t\tLevel_Name as string,\n\t\tDepartment_Name as string,\n\t\tId as string,\n\t\tDeployable as string,\n\t\tType as string,\n\t\tLocation as string,\n\t\tCategory as string,\n\t\tStatus as string,\n\t\tContribution as string,\n\t\tDeleted as string,\n\t\tSub_Departments as string,\n\t\tProjectIds as string,\n\t\tAccountIds as string,\n\t\tAccountNames as string,\n\t\tActiveSowCount as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\tpartitionBy('key',\n\t\t0,\n\t\tEmployee_Id\n\t)) ~> ParqSource\nParqSource filter(Designation_Name==\"Manager\",\n\tpartitionBy('key',\n\t\t0,\n\t\tEmployee_Id\n\t)) ~> ManagersFilter"
+			"script": "source(output(\n\t\tEmployee_Id as string,\n\t\tEmployee_Name as string,\n\t\tDesignation_Name as string,\n\t\tDesignation_Id as string,\n\t\tDesignation_Id_Int as string,\n\t\tGroup_Name as string,\n\t\tLevel_Name as string,\n\t\tDepartment_Name as string,\n\t\tId as string,\n\t\tDeployable as string,\n\t\tType as string,\n\t\tLocation as string,\n\t\tCategory as string,\n\t\tStatus as string,\n\t\tContribution as string,\n\t\tDeleted as string,\n\t\tSub_Departments as string,\n\t\tProjectIds as string,\n\t\tAccountIds as string,\n\t\tAccountNames as string,\n\t\tActiveSowCount as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\tpartitionBy('key',\n\t\t0,\n\t\tEmployee_Id\n\t)) ~> ParqSource\nParqSource filter(Designation_Name==\"Manager\",\n\tpartitionBy('key',\n\t\t0,\n\t\tEmployee_Id\n\t)) ~> ManagersFilter\nManagersFilter sink(allowSchemaDrift: false,\n\tvalidateSchema: true,\n\tformat: 'parquet',\n\tpartitionFileNames:['Managers'],\n\tpartitionBy('key',\n\t\t0,\n\t\tEmployee_Id\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Target"
 		}
 	}
 }
