@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Excel2ParqCopy",
+				"name": "Excel2ParqExtract",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -291,7 +291,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Excel2ParqCopy",
+						"activity": "Excel2ParqExtract",
 						"dependencyConditions": [
 							"Succeeded"
 						]
