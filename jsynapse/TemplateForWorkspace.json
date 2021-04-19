@@ -1,0 +1,842 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"type": "string",
+			"metadata": "Workspace name",
+			"defaultValue": "jsynapse"
+		},
+		"jsynapse-WorkspaceDefaultSqlServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'jsynapse-WorkspaceDefaultSqlServer'"
+		},
+		"jsynapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://jdlstoregen2.dfs.core.windows.net"
+		}
+	},
+	"variables": {
+		"workspaceId": "[concat('Microsoft.Synapse/workspaces/', parameters('workspaceName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('workspaceName'), '/DataPipeline01')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Excel2ParqExtract",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "input//Resourcing_Details.xlsx"
+							},
+							{
+								"name": "Destination",
+								"value": "output//Resources_April_2021"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"validateDataConsistency": true,
+							"logSettings": {
+								"enableCopyActivityLog": true,
+								"copyActivityLogSettings": {
+									"logLevel": "Info",
+									"enableReliableLogging": false
+								},
+								"logLocationSettings": {
+									"linkedServiceName": {
+										"referenceName": "jsynapse-WorkspaceDefaultStorage",
+										"type": "LinkedServiceReference"
+									},
+									"path": "logs"
+								}
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Employee_Id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Employee_Id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Employee_Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Employee_Name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Designation_Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Designation_Name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Designation_Id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Designation_Id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Designation_Id_Int",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Designation_Id_Int",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Group_Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Group_Name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Level_Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Level_Name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Department_Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Department_Name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Deployable",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Deployable",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Location",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Location",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Category",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Category",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Status",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Status",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Contribution",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Contribution",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Deleted",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Deleted",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sub_Departments",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sub_Departments",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ProjectIds",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ProjectIds",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountIds",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountIds",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountNames",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountNames",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ActiveSowCount",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ActiveSowCount",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_yby",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_yby",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Parq2TargDataFlow",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Excel2ParqExtract",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Parq2TargDataFlow",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ParqSource": {},
+									"Target": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": [],
+				"lastPublishTime": "2021-04-17T04:08:33Z"
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/SourceDataset_yby')]",
+				"[concat(variables('workspaceId'), '/datasets/DestinationDataset_yby')]",
+				"[concat(variables('workspaceId'), '/dataflows/Parq2TargDataFlow')]",
+				"[concat(variables('workspaceId'), '/linkedServices/jsynapse-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/DestinationDataset_yby')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "jsynapse-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "output"
+					},
+					"compressionCodec": "none"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/jsynapse-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/ParqDataset')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "jsynapse-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "output"
+					},
+					"compressionCodec": "none"
+				},
+				"schema": [
+					{
+						"name": "Employee_Id",
+						"type": "UTF8"
+					},
+					{
+						"name": "Employee_Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "Designation_Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "Designation_Id",
+						"type": "UTF8"
+					},
+					{
+						"name": "Designation_Id_Int",
+						"type": "UTF8"
+					},
+					{
+						"name": "Group_Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "Level_Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "Department_Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "Id",
+						"type": "UTF8"
+					},
+					{
+						"name": "Deployable",
+						"type": "UTF8"
+					},
+					{
+						"name": "Type",
+						"type": "UTF8"
+					},
+					{
+						"name": "Location",
+						"type": "UTF8"
+					},
+					{
+						"name": "Category",
+						"type": "UTF8"
+					},
+					{
+						"name": "Status",
+						"type": "UTF8"
+					},
+					{
+						"name": "Contribution",
+						"type": "UTF8"
+					},
+					{
+						"name": "Deleted",
+						"type": "UTF8"
+					},
+					{
+						"name": "Sub_Departments",
+						"type": "UTF8"
+					},
+					{
+						"name": "ProjectIds",
+						"type": "UTF8"
+					},
+					{
+						"name": "AccountIds",
+						"type": "UTF8"
+					},
+					{
+						"name": "AccountNames",
+						"type": "UTF8"
+					},
+					{
+						"name": "ActiveSowCount",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/jsynapse-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/ParquetTarget')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "jsynapse-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "target",
+						"fileSystem": "output"
+					},
+					"compressionCodec": "none"
+				},
+				"schema": [
+					{
+						"name": "Employee_Id",
+						"type": "UTF8"
+					},
+					{
+						"name": "Employee_Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "Designation_Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "Designation_Id",
+						"type": "UTF8"
+					},
+					{
+						"name": "Designation_Id_Int",
+						"type": "UTF8"
+					},
+					{
+						"name": "Group_Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "Level_Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "Department_Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "Id",
+						"type": "UTF8"
+					},
+					{
+						"name": "Deployable",
+						"type": "UTF8"
+					},
+					{
+						"name": "Type",
+						"type": "UTF8"
+					},
+					{
+						"name": "Location",
+						"type": "UTF8"
+					},
+					{
+						"name": "Category",
+						"type": "UTF8"
+					},
+					{
+						"name": "Status",
+						"type": "UTF8"
+					},
+					{
+						"name": "Contribution",
+						"type": "UTF8"
+					},
+					{
+						"name": "Deleted",
+						"type": "UTF8"
+					},
+					{
+						"name": "Sub_Departments",
+						"type": "UTF8"
+					},
+					{
+						"name": "ProjectIds",
+						"type": "UTF8"
+					},
+					{
+						"name": "AccountIds",
+						"type": "UTF8"
+					},
+					{
+						"name": "AccountNames",
+						"type": "UTF8"
+					},
+					{
+						"name": "ActiveSowCount",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/jsynapse-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SourceDataset_yby')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "jsynapse-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Resourcing_Details",
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Resourcing_Details.xlsx",
+						"fileSystem": "input"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Employee_Id",
+						"type": "String"
+					},
+					{
+						"name": "Employee_Name",
+						"type": "String"
+					},
+					{
+						"name": "Designation_Name",
+						"type": "String"
+					},
+					{
+						"name": "Designation_Id",
+						"type": "String"
+					},
+					{
+						"name": "Designation_Id_Int",
+						"type": "String"
+					},
+					{
+						"name": "Group_Name",
+						"type": "String"
+					},
+					{
+						"name": "Level_Name",
+						"type": "String"
+					},
+					{
+						"name": "Department_Name",
+						"type": "String"
+					},
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "Deployable",
+						"type": "String"
+					},
+					{
+						"name": "Type",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Category",
+						"type": "String"
+					},
+					{
+						"name": "Status",
+						"type": "String"
+					},
+					{
+						"name": "Contribution",
+						"type": "String"
+					},
+					{
+						"name": "Deleted",
+						"type": "String"
+					},
+					{
+						"name": "Sub_Departments",
+						"type": "String"
+					},
+					{
+						"name": "ProjectIds",
+						"type": "String"
+					},
+					{
+						"name": "AccountIds",
+						"type": "String"
+					},
+					{
+						"name": "AccountNames",
+						"type": "String"
+					},
+					{
+						"name": "ActiveSowCount",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/jsynapse-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/PowerBIWorkspace1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "PowerBIWorkspace",
+				"typeProperties": {
+					"workspaceID": "jsynapse",
+					"tenantID": "c98c7e35-4f81-4d91-84ea-e137a44a3fee"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/jsynapse-WorkspaceDefaultSqlServer')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"parameters": {
+					"DBName": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('jsynapse-WorkspaceDefaultSqlServer_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/jsynapse-WorkspaceDefaultStorage')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('jsynapse-WorkspaceDefaultStorage_properties_typeProperties_url')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AutoResolveIntegrationRuntime')]",
+			"type": "Microsoft.Synapse/workspaces/integrationRuntimes",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 0
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Parq2TargDataFlow')]",
+			"type": "Microsoft.Synapse/workspaces/dataflows",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ParqDataset",
+								"type": "DatasetReference"
+							},
+							"name": "ParqSource"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ParquetTarget",
+								"type": "DatasetReference"
+							},
+							"name": "Target"
+						}
+					],
+					"transformations": [
+						{
+							"name": "ManagersFilter"
+						}
+					],
+					"script": "source(output(\n\t\tEmployee_Id as string,\n\t\tEmployee_Name as string,\n\t\tDesignation_Name as string,\n\t\tDesignation_Id as string,\n\t\tDesignation_Id_Int as string,\n\t\tGroup_Name as string,\n\t\tLevel_Name as string,\n\t\tDepartment_Name as string,\n\t\tId as string,\n\t\tDeployable as string,\n\t\tType as string,\n\t\tLocation as string,\n\t\tCategory as string,\n\t\tStatus as string,\n\t\tContribution as string,\n\t\tDeleted as string,\n\t\tSub_Departments as string,\n\t\tProjectIds as string,\n\t\tAccountIds as string,\n\t\tAccountNames as string,\n\t\tActiveSowCount as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\tpartitionBy('key',\n\t\t0,\n\t\tEmployee_Id\n\t)) ~> ParqSource\nParqSource filter(Designation_Name==\"Manager\",\n\tpartitionBy('key',\n\t\t0,\n\t\tAccountNames\n\t)) ~> ManagersFilter\nManagersFilter sink(input(\n\t\tEmployee_Id as string,\n\t\tEmployee_Name as string,\n\t\tDesignation_Name as string,\n\t\tDesignation_Id as string,\n\t\tDesignation_Id_Int as string,\n\t\tGroup_Name as string,\n\t\tLevel_Name as string,\n\t\tDepartment_Name as string,\n\t\tId as string,\n\t\tDeployable as string,\n\t\tType as string,\n\t\tLocation as string,\n\t\tCategory as string,\n\t\tStatus as string,\n\t\tContribution as string,\n\t\tDeleted as string,\n\t\tSub_Departments as string,\n\t\tProjectIds as string,\n\t\tAccountIds as string,\n\t\tAccountNames as string,\n\t\tActiveSowCount as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: true,\n\tformat: 'parquet',\n\ttruncate: true,\n\tpartitionBy('key',\n\t\t0,\n\t\tAccountNames\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Target"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/ParqDataset')]",
+				"[concat(variables('workspaceId'), '/datasets/ParquetTarget')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/WorkspaceSystemIdentity')]",
+			"type": "Microsoft.Synapse/workspaces/credentials",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		}
+	]
+}
