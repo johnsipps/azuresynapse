@@ -715,20 +715,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/PowerBIWorkspace1')]",
-			"type": "Microsoft.Synapse/workspaces/linkedServices",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": [],
-				"type": "PowerBIWorkspace",
-				"typeProperties": {
-					"workspaceID": "jsynapse",
-					"tenantID": "c98c7e35-4f81-4d91-84ea-e137a44a3fee"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/jsynapse-WorkspaceDefaultSqlServer')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -837,6 +823,38 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Trigger 1')]",
+			"type": "Microsoft.Synapse/workspaces/triggers",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "DataPipeline01",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2021-05-05T11:28:00",
+						"endTime": "2021-05-06T11:28:00",
+						"timeZone": "Pacific Standard Time",
+						"schedule": {}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/pipelines/DataPipeline01')]"
+			]
 		}
 	]
 }
